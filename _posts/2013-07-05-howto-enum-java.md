@@ -88,7 +88,6 @@ El código siguiente muestra algunos ejemplos básicos de utilización de los en
             System.out.println("Catched exception: " + e.getMessage());
         }
     }
-view raw
 {% endhighlight %}
 
 Algunos métodos muy utilizados de la clase Enum son: 
@@ -120,8 +119,8 @@ Veamos su utilidad con más detalle.
 
 {% highlight java %}
 public abstract class EnumSet<E extends Enum<E>>
-extends AbstractSet<E>
-implements Cloneable, Serializable
+    extends AbstractSet<E>
+    implements Cloneable, Serializable
 {% endhighlight %}
 
 La clase EnumSet es una implementación especializada de la interfaz Set para su uso con tipos enum. Todos los elementos de un EnumSet deben pertenecer al mismo tipo enum, el cual es especificado de forma implícita o explícita cuando el EnumSet es creado.
@@ -180,8 +179,8 @@ El siguiente fragmento muestra los procedimientos para crear objetos de tipo Enu
 
 {% highlight java %}
 public class EnumMap<K extends Enum<K>,V>
-extends AbstractMap<K,V>
-implements Serializable, Cloneable
+    extends AbstractMap<K,V>
+    implements Serializable, Cloneable
 {% endhighlight %}
 
 La clase EnumMap es una implementación especializada de la interfaz Map para su uso con claves (K) de tipo enum. Todas las claves de un EnumMap deben pertenecer al mismo tipo enum, el cual es especificado de forma implícita o explícita cuando el EnumMap es creado.
