@@ -61,7 +61,7 @@ El teselado hexagonal proporciona 6 direcciones de movimiento con distancia homo
 
 ¿Se aprecia la diferencia? En el primer caso no se usan transiciones y en el segundo caso sí. A pesar de las ventajas del teselado hexagonal, su implementación resulta bastante más compleja de implementar que el teselado cuadrado, como comprobaremos al analizar  sus propiedades matemáticas. Por otro lado, a pesar de las dificultades asociadas al movimiento diagonal, su implementación resulta mucho menos problemática en el ámbito de los videojuegos que en el ámbito de los juegos de tablero. ¿Cómo se explica entonces la abrumadora preponderancia  de los mapas hexagonales en el ámbito de los videojuegos? Posiblemente tenga bastante que ver la gran influencia de los juegos de tablero, donde el movimiento diagonal sí que supone un gran obstáculo.
 
-Y eso es todo por ahora, en la [próxima entrega]({% post_url 2013-10-10-mapas-hexagonales-2 %}) de la serie veremos las propiedades geométricas del hexágono y abordaremos el tratamiento de mapas hexagonales  en un videojuego.
+Y eso es todo por ahora, en la [próxima entrega]({{ site.baseurl }}/{% post_url 2013-10-10-mapas-hexagonales-2 %}) de la serie veremos las propiedades geométricas del hexágono y abordaremos el tratamiento de mapas hexagonales  en un videojuego.
 
 # Enlaces
 
