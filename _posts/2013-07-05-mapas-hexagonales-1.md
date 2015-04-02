@@ -1,6 +1,6 @@
 ---
-title: "Mapas hexagonales (I) Introducción"
 layout: post
+title: "Mapas hexagonales (I) Introducción"
 date: 2013-07-05 21:07:35
 categories: programming java hexagonal-maps 
 ---
@@ -11,7 +11,7 @@ Con esta entrada inauguro una serie dedicada a los **mapas hexagonales** y su re
 
 # Teselados
 
-![]({{site.url}}/mapas-hexagonales-1/villa-tejada.jpg "Mosaico romano decorativo (Villa Tejada)")
+![]({{ site.url }}/assets/mapas-hexagonales-1/villa-tejada.jpg "Mosaico romano decorativo (Villa Tejada)")
 *Mosaico romano decorativo (Villa Tejada)*
 
 Un **teselado** es una superficie recubierta a base de pequeñas piezas puestas unas junto a otras tratando de no dejar huecos. Los teselados han sido utilizados en todo el mundo desde tiempos  antiguos para recubrir suelos y paredes, e igualmente como motivos decorativos de muebles, alfombras, tapices, ropas. El ejemplo típico son los mosaicos romanos, hechos a base de pequeñas piezas de piedra, terracota o vidrio coloreado denominados [teselas](http://es.wikipedia.org/wiki/Tesela). En el ámbito matemático se dice que una figura es **teselante** cuando acoplando piezas de ese tipo es posible recubrir por completo el plano sin dejar huecos ni fisuras; la configuración resultante recibe el nombre de  teselado. Los matemáticos y  los geómetras se han interesado especialmente por los teselados poligonales, es decir, hechos a base de teselas poligonales. 

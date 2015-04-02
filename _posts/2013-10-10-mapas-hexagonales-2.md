@@ -1,8 +1,8 @@
 ---
-title: "Mapas Hexagonales (II) Coordenadas Hexagonales"
 layout: post
+title: "Mapas Hexagonales (II) Coordenadas Hexagonales"
 date: 2013-10-10 19:27:41
-categories: programming java hexagonal-maps games 
+categories: programming java hexagonal-maps 
 ---
 
 # Mapas Hexagonales (II): Coordenadas Hexagonales

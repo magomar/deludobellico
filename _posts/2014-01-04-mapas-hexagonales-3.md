@@ -1,6 +1,6 @@
 ---
-title: "Mapas Hexagonales (III) Representando el terreno"
 layout: post
+title: "Mapas Hexagonales (III) Representando el terreno"
 date: 2014-01-04 22:39:12
 categories: programming java hexagonal-maps
 ---
