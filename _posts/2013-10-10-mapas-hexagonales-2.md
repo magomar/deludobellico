@@ -7,7 +7,7 @@ categories: programming java hexagonal-maps
 
 # Mapas Hexagonales (II): Coordenadas Hexagonales
 
-En el [artículo anterior](../mapas-hexagonales-1) realizamos una somera introducción al uso de mapas hexagonales en videojuegos. En esta entrada iniciamos la serie propiamente dedicada a la programación de mapas hexagonales. En concreto,  el resto del artículo trata los siguientes temas: 
+En el [artículo anterior]({% post_url 2013-07-05-mapas-hexagonales-1 %}) realizamos una somera introducción al uso de mapas hexagonales en videojuegos. En esta entrada iniciamos la serie propiamente dedicada a la programación de mapas hexagonales. En concreto,  el resto del artículo trata los siguientes temas: 
 
   * Propiedades del hexágono
   * Coordenadas hexagonales
@@ -164,7 +164,7 @@ Sin embargo, esta nueva rejilla no se ajusta por igual a todos los hexágonos, s
 
 ### Coordenadas relativas
 
-Para  calcular las coordenadas hexagonales, además de las coordenadas rectangulares `(u,v)` necesitamos obtener calcular las coordenadas del píxel relativas al rectángulo `(u,v)`, a las cuales denominaremos  `(rx, ry)`.
+Para  calcular las coordenadas hexagonales, además de las coordenadas rectangulares `(u,v)` necesitamos obtener las coordenadas del píxel relativas al rectángulo `(u,v)`, a las cuales denominaremos  `(rx, ry)`.
 
 {% highlight java %}
    rx = x % (b + s)
@@ -431,7 +431,7 @@ Si quieres, puedes clonar el proyecto tú mismo desde su repositorio en Github: 
 
 Puedes clonar o descargar el proyecto completo en GitHub. Lo que aquí se describe se corresponde con la versión 0.0.1.
 
-Si quieres aprender técnicas para representar el terreno, ya está disponible el siguiente artículo: [Mapas hexagonales (III): Representando el terreno](../mapas-hexagonales-3).
+Si quieres aprender técnicas para representar el terreno, ya está disponible el siguiente artículo: [Mapas hexagonales (III): Representando el terreno]({% post_url 2014-01-04-mapas-hexagonales-3 %}).
 
 # Para saber más
 
