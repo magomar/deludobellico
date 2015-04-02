@@ -13,6 +13,9 @@ github_username:  magomar
 # Build settings
 markdown: kramdown
 
-#safe: true
-#lsi: false
-#source: .
+safe: true
+lsi: false
+source: .
+
+permalink: pretty
+#pygments: true
