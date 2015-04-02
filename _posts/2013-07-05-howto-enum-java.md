@@ -19,7 +19,7 @@ Un tipo **[enum](http://docs.oracle.com/javase/tutorial/java/javaOO/enum.html)*
 
 El siguiente fragmento de código muestra la definición de una enumeración en Java. El tipo _TerrainType_ define diferentes tipos de terreno, caracterizados por un único atributo, _movementCost._
 
-```java
+{% highlight java %}
 public enum TerrainType implements MovementEffects{
     OPEN(0),
     SAND(1),
@@ -49,7 +49,7 @@ public enum TerrainType implements MovementEffects{
         return movementCost;
     }
 }
-```
+{% endhighlight %}
 
 A cada elemento o valor de enumeración se le asigna un valor entero, que se puede consultar mediante el método _ordinal()_ y corresponde al orden en que se declaran en el código fuente , a partir de 0. Además, a cada elemento le corresponde un nombre único, de tipo String,  que se puede obtener mediante el método name(). Este método se hereda de Enum, y devuelve una cadena con el mismo texto usado para declarar el elemento del enum. Por ejemplo, TerrainType.FOREST.name() devuelve "FOREST". 
 
@@ -57,7 +57,7 @@ A cada elemento o valor de enumeración se le asigna un valor entero, que se pue
 
 El código siguiente muestra algunos ejemplos básicos de utilización de los enum en Java, usando como referencia la clase TerrainType previamente definida.
 
-```java
+{% highlight java %}
 @Test
     public void testEnumManipulation() throws Exception {
         System.out.println("*** Testing enum manipulation ***\n");
@@ -89,7 +89,7 @@ El código siguiente muestra algunos ejemplos básicos de utilización de los en
         }
     }
 view raw
-```
+{% endhighlight %}
 
 Algunos métodos muy utilizados de la clase Enum son: 
 
@@ -118,11 +118,11 @@ Veamos su utilidad con más detalle.
 
 ### EnumSet
 
-```java
+{% highlight java %}
 public abstract class EnumSet<E extends Enum<E>>
 extends AbstractSet<E>
 implements Cloneable, Serializable
-```
+{% endhighlight %}
 
 La clase EnumSet es una implementación especializada de la interfaz Set para su uso con tipos enum. Todos los elementos de un EnumSet deben pertenecer al mismo tipo enum, el cual es especificado de forma implícita o explícita cuando el EnumSet es creado.
 
@@ -140,7 +140,7 @@ El siguiente fragmento muestra los procedimientos para crear objetos de tipo Enu
 * Búsqueda:  método contains, es un método definido en el interfaz Set, el cual nos dice si un elemento pertenece al Set o no.
 * Modificacion: métodos add, remove, addAll, removeAll, retainAll
 
-```java
+{% highlight java %}
 @Test
     public void testEnumSet() throws Exception {
         System.out.println("\n*** Testing enum sets manipulation ***\n");
@@ -174,15 +174,15 @@ El siguiente fragmento muestra los procedimientos para crear objetos de tipo Enu
         assert terrainSet.contains(TerrainType.FOREST);
         assert !terrainSet.contains(TerrainType.LIGHT_WOODS);
     }
-```
+{% endhighlight %}
 
 ### EnumMap
 
-```java
+{% highlight java %}
 public class EnumMap<K extends Enum<K>,V>
 extends AbstractMap<K,V>
 implements Serializable, Cloneable
-```
+{% endhighlight %}
 
 La clase EnumMap es una implementación especializada de la interfaz Map para su uso con claves (K) de tipo enum. Todas las claves de un EnumMap deben pertenecer al mismo tipo enum, el cual es especificado de forma implícita o explícita cuando el EnumMap es creado.
 
@@ -190,13 +190,13 @@ Todo lo que se cumple para los elementos de un EnumSet se cumple para las claves
 
 A diferencia de los EnumSet, que se crean mediante métodos factoría, los EnumMap se crean mediante constructores, como por ejemplo:
 
-```java
+{% highlight java %}
 public EnumMap(Class<K> keyType)
-```
+{% endhighlight %}
 
 El siguiente fragmento de código muestra la creación y uso de EnumMap.
 
-```java
+{% highlight java %}
     @Test
     public void testEnumMap() throws Exception {
         System.out.println("\n*** Testing enum maps manipulation ***\n");
@@ -211,6 +211,6 @@ El siguiente fragmento de código muestra la creación y uso de EnumMap.
             assert entry.getValue().equals(entry.getKey().name().toLowerCase() + ".png");
         }
     }
-```
+{% endhighlight %}
 
 Los EnumMap son una alternativa muy interesante a los HashMap cuando las claves son constantes, pues resultan más compactos y eficientes.

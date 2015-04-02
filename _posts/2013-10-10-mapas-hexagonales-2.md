@@ -77,13 +77,13 @@ Si nos fijamos en la imagen anterior observaremos dos propiedades importantes:
 
 Dadas las coordenadas <i,j> de un hexágono de nuestro mapa (i es la columna y j es la fila), vamos a calcular las coordenadas <x,y> del píxel correspondiente al punto A del rectángulo que contiene ese hexágono, como sigue:
 
-```
+{% highlight java %}
 x = i * (s + r)
 
 SI (i es un número par)
    ENTONCES  y = a * j + r
    SINO y = a * j'''
-```
+{% endhighlight %}
 
 La operación complementaria al cálculo anterior es la conversión de píxeles a coordenadas hexagonales. Para explicar esa conversión, es muy conveniente introducir antes la cuestión de las direcciones y el cálculo de los hexágonos vecinos a otro.
 
@@ -124,12 +124,12 @@ Con la estructura de datos definida en esa tabla es muy fácil describir las fó
 
 Dado un hexágono con coordenadas `(i,j)`, las coordenadas `(i’, j’)` del hexágono adyacente en la dirección `d`, se calculan como:
 
-```
+{% highlight java %}
 i' = i + d->incCol
 SI esPar('i) 
    ENTONCES j' = d->incFilaPar 
    SINO j' = d->incFilaImpar
-```
+{% endhighlight %}
 
 # Conversión de píxeles a coordenadas hexagonales
 
@@ -154,10 +154,10 @@ En vez de utilizar los rectángulos ADJG \[con dimensiones w (anchura) y h (altu
 
 Dado un píxel de coordenadas `(x,y)`, calculamos las coordenadas `(u,v)` del rectángulo en el cual cae, según el sistema de coordenadas rectangular que acabamos de presentar, como sigue:
 
-```
+{% highlight java %}
    u = x / (b + s)
    v = y / h
-```
+{% endhighlight %}
 
 Sin embargo, esta nueva rejilla no se ajusta por igual a todos los hexágonos, sino que hay 2 casos posibles, marcados respectivamente en color azul y amarillo en la imagen anterior. La distinción entre un caso y otro es relevante para el cálculo de las coordenadas hexagonales, tal y como se describirá un par de secciones más adelante.
 
@@ -167,23 +167,23 @@ Sin embargo, esta nueva rejilla no se ajusta por igual a todos los hexágonos, s
 
 Para  calcular las coordenadas hexagonales, además de las coordenadas rectangulares `(u,v)` necesitamos obtener calcular las coordenadas del píxel relativas al rectángulo `(u,v)`, a las cuales denominaremos  `(rx, ry)`.
 
-```
+{% highlight java %}
    rx = x % (b + s)
    ry = y % h
-```
+{% endhighlight %}
 
 #### Cálculo de la pendiente
 
 Para calcular las coordenadas hexagonales `(i,j)`,  hay que distinguir entre columnas pares e impares, y a partir de ahí determinar en qué hexágono está el píxel respecto del hexágono con coordenadas `(u,v)`. Para lograrlo es preciso determinar en que zona cae el píxel dentro del hexágono.
 
 El cálculo de las diferentes zonas de interés se basa en una magnitud:  la pendiente p de la recta IF, la cual se computa como sigue
-```
+{% highlight java %}
   p = |JF| / |IJ|
-```
+{% endhighlight %}
 Si nos fijamos en la geometría del hexágono veremos que la longitud de JF es precisamente la apotema a, y la longitud de IJ es la magnitud b, así pues
-```
+{% highlight java %}
    p = a / b
-```
+{% endhighlight %}
 Esa pendiente nos va a permitir discernir si un píxel cae dentro o fuera de cierto hexágono, y más concretamente, en cuál de las 4 zonas exteriores posibles (ABE, CDF, EGH o IFJ). A partir de ese dato podremos calcular las coordenadas del hexágono en el cual está situado el píxel.
 
 A continuación se describen los cálculos según si se trata de una columna par o impar.
@@ -207,12 +207,12 @@ Para las columnas pares (en azul) hay  3 áreas distintas: la porción del hexá
 ### Calculo de las coordenadas de un hexágono adyacente
 
 Una vez obtenida la dirección del hexágono vecino, el cálculo de las coordenadas se realiza según el procedimiento explicado más arriba (sección sobre las direcciones del hexágono).
-```
+{% highlight java %}
    i' = i + d->incCol
    SI esPar(i')
       ENTONCES j' = d->incFilaPar
       SINO j' = d->incFilaImpar
-```
+{% endhighlight %}
 
 # Implementación en Java
 
@@ -220,7 +220,7 @@ A continuación se presenta una implementación básica de los conceptos anterio
 
 Como iremos viendo en este y otros artículos resulta muy práctico disponder de una clase Direction encargada de encapsular toda la información relativa a las direcciones de un hexágono. Una buena solución para implementar esta clase es el uso de Enum: cada dirección es una constante de tipo `Enum<Direction>` que tiene su propia información de estado y métodos asociados para obtener esa información.
 
-```java
+{% highlight java %}
  public enum Direction {
     N(0, -1, -1),
     NE(1, 0, -1),
@@ -257,11 +257,11 @@ Como iremos viendo en este y otros artículos resulta muy práctico disponder de
         return new Point(column, row);
     }
 }
-```
+{% endhighlight %}
 
 El método `getNeighborCoordinates(Point coordinates)` hace uso del método estático `isEven(int number)`  para determinar si una coordenada es par o impar. Aunque determinar si un entero es par o impar es una tarea sencilla que no requiere más que una operación y una comparación, a efectos de legibilidad y mantenimiento del código es útil crearse unos métodos estáticos que se encarguen de hacer esa operación, y utilizarlos cuando sea necesario. En nuestro caso, hemos creado una clase dedicada a utilidades varias, que hemos denominado `Util`, y ahí hemos implementado esos métodos
 
-```java
+{% highlight java %}
  public class Util {
     public static boolean isEven(int number) {
         return (number & 1) == 0;
@@ -271,14 +271,14 @@ El método `getNeighborCoordinates(Point coordinates)` hace uso del método est�
         return (number & 1) == 1;
     }
 }
-```
+{% endhighlight %}
 
 A continuación describimos la clase `HexagonalMap`, la cual encapsula toda la información de un mapa y la  representa gráficamente sobre un panel. Por simplicidad,  de momento la misma clase HexagonalMap contiene la lógica del mapa y su representación gráfica.
 
 Para la representación gráfica se utiliza (vía herencia) un `JPanel`.  A nivel lógico se proporcionan los métodos `tileToPixel`  y `pixelToTile`, encargados respectivamente de la conversión de coordenadas hexagonales a píxel y viceversa.
 
 
-```java
+{% highlight java %}
 import javax.swing.*;
 import java.awt.*;
  
@@ -369,13 +369,13 @@ public class HexagonalMap extends JPanel {
         return (column >= 0 && column < width) && (row >= 0 && row < height);
     }
 }
-```
+{% endhighlight %}
 
 Además, se incluye otro método, tileIsWithinBoard, que sirve para determinar si unas coordenadas hexagonales caen dentro del mapa o no (pues algunos píxels no quedan sobre ningún hexágono, sino en las zonas vacías que hay en los bordes superior e inferior del mapa)
 
 Finalmente, la interfaz principal de la aplicación se ha implementando extendiendo un `JFrame`.  Sobre la ventana principal se añade un panel de tipo `HexagonalMap`, y un panel de tipo `MapInfo`. El primero muestra el mapa hexagonal y el segundo la información relativa al puntero del ratón.
 
-```java
+{% highlight java %}
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -388,7 +388,6 @@ public class HexagonalMapGUI extends JFrame {
     private HexagonalMap map;
     private MapInfo info;
     private JPanel mainPanel;
- 
  
     public HexagonalMapGUI() {
         super("Hexagonal Map Demo");
@@ -423,7 +422,7 @@ public class HexagonalMapGUI extends JFrame {
         }
     }
 }
-```
+{% endhighlight %}
 
 El resultado de ejecutar la clase anterior es el siguiente.
 

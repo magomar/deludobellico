@@ -29,7 +29,7 @@ Dado que el número de elementos utilizados para modelar el terreno es finito, l
 
 Para concretar, se van a considerar los tipos de terreno incluidos en la _enum_ **TerrainType**. Se trata de una modificación de la clase del mismo nombre usada en [1].
 
- ```java
+ {% highlight java %}
  public enum TerrainType implements MovementEffects, ImageProviderFactory {
     OPEN(0),
     SAND(1),
@@ -74,7 +74,7 @@ Para concretar, se van a considerar los tipos de terreno incluidos en la _enum_�
         return new MatrixImageProvider("", getFilename(), 8, 8, 408, 352);
     }
 }
- ```
+ {% endhighlight %}
 
  _TerrainType_ implementa dos interfaces: _MovementEffects_ y _ImageProviderFactory_. La  interfaz _MovementEffects_ la debe implementar cualquier clase que describa efectos sobre el movimiento. En concreto, esta interfaz declara el método_ int getMovementCost()_, así como la constante *final static int IMPASSABLE = Integer.MAX_VALUE*, la cual se puede usar para indicar que un movimiento es imposible o no está permitido. El modelo subyacente es muy simple, y se resume en 2 ideas: (a) el coste de movimiento se expresa mediante un número entero positivo, y (b) cuanto más alto es ese número mayor es el coste de movimiento. 
 
@@ -88,11 +88,12 @@ Para concretar, se van a considerar los tipos de terreno incluidos en la _enum_�
  ![](m_terrain_forest.png "Gráficos para indicar la presencia de bosque")
 
 Como se puede observar, las diferentes variaciones de un cierto tipo de terreno que podemos encontrar se representan en una matriz bidimensional. Nótese que la matriz consta de 8 * 8 = 64 imágenes distintas, que es justo el número de combinaciones de direcciones posible.  Dada esa matriz y un índice de 0 a 64 es trivial el cálculo de las coordenadas (fila y columna) correspondientes a ese índice. A lo largo de este artículo y del proyecto de software que lo acompaña, asumimos el orden mostrado en este ejemplo, en el cual la columna es más significativa que la fila, lo que se traduce en las siguientes relaciones:
-```
+
+{% highlight java %}
  columna = índice / num-filas
 
  fila = indíce % num-filas
-```
+{% endhighlight %}
 
 ## Codificación de las direcciones
 
@@ -102,7 +103,7 @@ Para entender como encajan todas las piezas del puzle, es necesario entender el 
 
 En un mapa hexagonal, la información sobre el terreno se asocia a un hexágono en particular. Así pues, vamos a necesitar una clase de objetos que se encargue de representar toda la información relativa a cada celda del mapa. A continuación se muestra el código de esta clase, denominada Tile.
 
-```java
+{% highlight java %}
 public class Tile {
     private java.util.Map<TerrainType, Directions> terrain;
  
@@ -131,7 +132,7 @@ public class Tile {
         return tile;
     }
 }
-```
+{% endhighlight %}
 
 La clase Tile debe indicar, para cada tipo de terreno posible, las direcciones presentes de ese tipo de terreno. Una primera aproximación sería el uso de una estructura de tipo Map<TerrainType, Set<Direction>>, el cual asociaría a cada tipo de terreno un conjunto finito de elementos de tipo Direction. A nivel de implementación, como tanto TerrainType como Direction son de tipo enum, se podrían usar un EnumMap y un EnumSet para representar, respectivamente, el Map y el Set.
 
@@ -141,11 +142,11 @@ Sin embargo, hay una forma aún más eficiente de representar el terreno usando 
 
 Al número resultante de considerar cada uno de esos bits bandera como parte de un único número binario, se le denomina máscara binaria. Para calcular una máscara necesitamos decidir el nivel de significación de cada bandera. En particular, en este proyecto empezamos asignando el bit menos significativo (el 0) a la dirección norte (Direction.N), y asignamos las demás direcciones de forma incremental, recorriendo  las direcciones de la celda en sentido horario: el 1 para el NE, el 2 para el SE, el 3 para el S, el 4 para el SO, y el 5 para el NO.  Se muestran a continuación algunos ejemplos de conjuntos de direcciones y las máscaras asociadas a cada uno:
 
-```
+{% highlight java %}
 {N} -> 000001
 {N, NE} -> 000011
 {S, SE} -> 001100
-```
+{% endhighlight %}
 Esta forma de representación binaria ocupa muy poca memoria (para cada celda se requiere un byte por cada tipo de terreno) y además permite realizar operaciones de conjunto de forma muy eficiente, mediante lógica binaria.
 
 En Java disponemos de los enum como alternativa al enfoque basado en máscaras de bits. Es una solución de más alto nivel, más flexible, más legible, type safe y con una implementación eficiente y compacta. Además, como cada elemento enumerado lleva asociado un ordinal, es muy fácil pasar de una a otra representación según convenga.
@@ -154,7 +155,7 @@ Por ejemplo se podrían utilizar máscaras de bits para su almacenamiento en arc
 
 Veamos una nueva versión de la clase Direction que incorpora métodos para pasar de máscaras a conjuntos de direcciones (EnumSet).
 
-```java
+{% highlight java %}
 public enum Direction {
     N(0, -1, -1),
     NE(1, 0, -1),
@@ -215,7 +216,7 @@ public enum Direction {
         return (bitmask & flag) != 0;
     }
 }
-```
+{% endhighlight %}
 
 Una máscara no es más que un entero acotado. En nuestro caso tenemos 6 direcciones y por tanto sólo necesitamos 6 bits. Aunque Java proporciona la clase byte en el código proporcionado se utiliza int, que es el formato utilizado por Java para realizar operaciones con enteros, y así nos ahorramos conversiones de tipo implícitas. En realidad, y para ser más precisos, necesitamos 7 bits, pues además de las 6 direcciones reales, usamos también la dirección C, asignada al bit 6.
 
@@ -229,7 +230,7 @@ Nótese que algunos de estos métodos tienen bucles que iteran sobre las direcci
 
 Dado que el número de combinaciones de direcciones posibles es finito, podemos representar cada una de las 64 combinaciones posibles de direcciones como una constante en sí misma. Esa constante, representada como una enum podrá incluir toda la información que necesitamos precomputada. En concreto, la máscara de bits, el índice de una imagen, e incluso las coordenadas de cada imagen se pueden precomputar para todas y cada una de las 64 combinaciones de direcciones posibles. La clase Directions se encarga precisamente de hacer eso.
 
-```java
+{% highlight java %}
 public enum Directions {
  
     N,
@@ -335,7 +336,7 @@ public enum Directions {
         return !result.isEmpty();
     }
 }
-```
+{% endhighlight %}
 
 
 Lo primero que hay que destacar en esta solución es que aunque se usa la dirección C, en realidad no hacen falta 2^7, sino tan sólo 2^6 elementos. Esto se debe a que cuando aparece C lo hace siempre sola, es decir, sólo se necesita una combinación extra para incluir C, y por otro lado no es necesario representar la ausencia de terreno como valor (si un tipo de terreno no está presente en una celda se sabe porque no habrá una entrada en el atributo terrain ((Map<TerrainType, Directions>) de la clase Tile).  Así pues, se necesitan 2^6 -1 + 1 = 64 constantes o elementos del tipo enumerado *Directions*. Ponemos el elemento C en último lugar, y el resto ordenados según el valor de máscara que les correponde. De esta manera, el valor de la máscara se obtiene simplemente sumando 1 al valor ordinal. Nótese que la máscara puede valer desde 1 a 65. El valor 0 representaría el caso en que un tipo de terreno no está presente, pero en la práctica no es codificarlo explícitamente como acabamos de ver. De forma complementaria, la obtención de las direcciones a partir de una máscara es tan sencilla como devolver el elemento de tipo Directions cuyo ordinal vale  bitmask – 1 .
@@ -353,7 +354,7 @@ Ya hemos visto como codificar la información de cada celda de nuestro mapa. Fin
 
 Para ello, se describe una extensión de la clase JPanel que proporciona todos los métodos necesarios para dibujar un mapa completo. En primer lugar, y antes de describir esa extensión, se presenta la descripción a nivel lógico del mapa o tablero de juego, a la cual denominados Board.
 
-```java
+{% highlight java %}
 public class Board {
     private Tile[][] tiles;
     private int width;
@@ -389,13 +390,13 @@ public class Board {
     }
  
 }
-```
+{% endhighlight %}
 
 Esta clase se utiliza como mero contenedor de celdas, organizadas en forma de un array bidimensional de tipo Tile y dimensiones width * height. Como utilidad se ha incluido un método para crear mapas aleatorios usando un tipo de terreno en particular (método createRandomMap).
 
 Sólo queda ver como obtener la representación gráfica de toda la información incluida en un Board. Para ello se ha modificado la clase HexagonalMap. Ahora en vez de limitarse a dibujar hexágono, esta clase de panel es capaz de pintar el mapa usando los gráficos de almacenados en archivos de mapa de bits.
 
-```java
+{% highlight java %}
 public class HexagonalMap extends JPanel {
     private int width; // Number of columns
     private int height; // Number of rows
@@ -530,7 +531,7 @@ public class HexagonalMap extends JPanel {
         repaint();
     }
 }
-```
+{% endhighlight %}
 
 En el artículo anterior se detallaba el cálculo de los parámetros gráficos necesarios para representar un teselado hexagonal a partir del valor del lado del hexágono, pasado como parámetro en el constructor. En esta nueva versión de la clase HexagonalMap, en vez de pasar el lado del hexágono en el constructor, se pasa un objeto describiendo un tablero completo (Board), y las dimensiones de los hexágonos se calculan automáticamente a partir de un archivo de imagen de ejemplo, como se puede ver en el código del constructor.
 
@@ -540,7 +541,7 @@ Observe el funcionamiento del método paintTile. En primer lugar, se obtienen la
 
 Finalmente, se ha modificado la clase principal, HexagonalMapGUI para que obtenga un mapa aleatorio y lo pase como parámetro al constructor de la clase HexagonalMap.
 
-```java
+{% highlight java %}
 public class HexagonalMapGUI extends JFrame {
     static final int MAP_WIDTH = 10; // number of columns
     static final int MAP_HEIGHT = 10; // number of rows
@@ -587,7 +588,7 @@ public class HexagonalMapGUI extends JFrame {
         }
     }
 }
-```
+{% endhighlight %}
 
 A los 2 paneles existentes previamente, se ha añadido una barra de tareas con controles para crear un nuevo mapa aleatorio usando un tipo de terreno específico. La imagen siguiente muestra la nuevo interfaz de usuario.
 
