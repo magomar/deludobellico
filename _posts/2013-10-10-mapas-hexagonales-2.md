@@ -35,7 +35,7 @@ En geometría, un **hexágono** (o **exágono**) es un polígono de seis�
   * Se puede teselar el plano con hexágonos sin dejar ningún hueco.
 La siguiente imagen muestra un hexágono regular y las principales dones que nos interesan. 
 
-![Geometría del hexágono](hexagon-geometry.png "Geometría del hexágono")
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagon-geometry.png "Geometría del hexágono")
 
 La principal magnitud a tener en cuenta es el lado **_s_**. Un hexágono regular se puede caracterizar completamente a partir del tamaño de su lado, o lo que es lo mismo, de su radio _**r**_, ya que son iguales. El resto de magnitudes se derivan de _s_ y de los ángulos conocidos. Las otras magnitudes importantes que necesitamos para trabajar con mapas hexagonales son: 
 
@@ -48,11 +48,11 @@ La principal magnitud a tener en cuenta es el lado **_s_**. Un hexágono regula
 
 En una retícula cuadrada, a la hora de escoger el sistema de coordenadas hay un sistema obvio: se usan 2  ejes ortogonales: filas y columnas. Ya que en informática gráfica se suele poner el origen de coordenadas en la esquina superior izquierda, parece lógico adoptar la misma convención a la hora de nombrar las coordenadas de una cuadrícula, así es mucho más fácil la conversión entre coordenadas del mapa y píxeles. Pero, ¿qué ocurre en una configuración hexagonal? Con una disposición hexagonal hay muchas más opciones. La opción que se suele emplear en los juegos de tablero intenta reproducir de la manera más aproximada posible el sistema usado en las retículas cuadradas, es decir con 2 ejes ortogonales. Cuando se utilizan hexágonos como teselas, hay diferentes formas de construir el teselado, pues los hexágonos se pueden colocar con 2 orientaciones diferentes (horizontal o vertical). Además, para cada orientación hay diferentes formas de establecer los límites o bordes del mapa. Si tratamos de dar al mapa una forma cuadrada o rectangular, entonces hay 2 formas de crear el límite, tal y como se muestra en la imagen siguiente. 
 
-![Coordenadas hexagonales](hexagonal-coordinates.png "Coordenadas hexagonales")
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagonal-coordinates.png "Coordenadas hexagonales")
 
 La primera fila muestra las 2 variantes con los hexágonos en disposición horizontal, mientras que la segunda fila hace lo propio con una disposición vertical. En total hay 4 variantes porque para cada orientación de los hexágonos hay 2 formas de asignar coordenadas a partir del origen. Nótese que con una disposición horizontal hay diferencias entre las columnas pares e impares; mientras que con una disposición vertical hay diferencias entre las filas pares e impares. Estas diferencias son fundamentales para desarrollar funciones que permitan pasar de coordenadas de mapa a píxeles de imagen y viceversa. A partir de ahora adoptaremos como referencia o modelo el primer caso: **hexágonos horizontales, con las columnas impares más bajas que las pares**. La siguiente imagen muestra en detalle las principales medidas a tener en cuenta para manipular gráficamente mapas de teselado hexagonal. 
 
-![Geometría de un mapa hexagonal](hexagonal-map-measures.png "Geometría de un mapa hexagonal")
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagonal-map-measures.png "Geometría de un mapa hexagonal")
 
 Como se puede ver, existe relación entre las coordenadas del mapa y las diferentes medidas del hexágono ( **_s_**, _**a**_ y _**b**_), que ya hemos visto como se calculan. 
 
@@ -62,13 +62,13 @@ Como se puede ver, existe relación entre las coordenadas del mapa y las diferen
 
 Para establecer una correspondencia entre coordenadas de mapa y coordenadas de imagen (píxeles) tenemos que considerar la forma de representar los hexágonos gráficamente. En general, para almacenar un gráfico en un archivo se utiliza una imagen de formato rectangular. Así pues, la opción sencilla para almacenar gráficos hexagonales es el uso de imágenes rectangulares con el tamaño del rectángulo circunscrito, ese que tiene como dimensiones _**w y h**_, (véase figura "Geometría del hexágono"). Para representar un gráfico hexagonal en un rectángulo tan solo es necesario definir la zona externa al hexágono como transparente mediante el uso de un canal alfa. La imagen siguiente muestra un gráfico hexagonal y su correspondiente rectángulo circunscrito; la zona pintada de rosa sería transparente (el rosa sería el canal alfa). 
 
-![Gráfico hexagonal en imagen rectangular](hexagon-graphic.jpg "Gráfico hexagonal en imagen rectangular")
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagon-graphic.jpg "Gráfico hexagonal en imagen rectangular")
 
 Cuando vayamos a pintar hexágonos sobre una pantalla, necesitaremos colocar su imagen en una determinada posición, que se corresponderá con las coordenadas de su vértice **A**, pues a partir de ese punto y conociendo **s**, **a** y **b**, es posible obtener los demás puntos.
 
 Vamos a ver como se calcula A. Pero antes mostramos como quedan distribuidos los rectángulos contenedores de hexágonos en un mapa hexagonal.
 
-![Solapamiento de rectángulos circunscritos](hexagonal-map-grid-overlapping.png "Solapamiento de rectángulos circunscritos")
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagonal-map-grid-overlapping.png "Solapamiento de rectángulos circunscritos")
 
 Si nos fijamos en la imagen anterior observaremos dos propiedades importantes:
 
@@ -87,13 +87,13 @@ SI (i es un número par)
 
 La operación complementaria al cálculo anterior es la conversión de píxeles a coordenadas hexagonales. Para explicar esa conversión, es muy conveniente introducir antes la cuestión de las direcciones y el cálculo de los hexágonos vecinos a otro.
 
-![Gráfico hexagonal en imagen rectangular](hexagon-graphic.jpg "Gráfico hexagonal en imagen rectangular")
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagon-graphic.jpg "Gráfico hexagonal en imagen rectangular")
     
 # Direcciones del hexágono y cálculo de vecinos
 
 Cuando hablamos de las direcciones de un hexágono, nos referimos a las direcciones relativas de los lados de un hexágono respecto a su centro. La imagen siguiente representa las direcciones posibles para un hexágono dispuesto horizontalmente.
 
-![Las 6 direcciones de un héxagono](hexagon-directions.png "Las 6 direcciones de un héxagono")
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagon-directions.png "Las 6 direcciones de un héxagono")
 
 El uso de direcciones es fundamental para poder referirnos a los vecinos o hexágonos adyacentes. La obtención de vecinos es necesaria para diferentes diferentes cálculos y algoritmos, como la búsqueda de caminos (encontrar una ruta entre 2 celdas del mapa) y el cálculo de movimientos.
 
@@ -143,12 +143,11 @@ Obtención de coordenadas rectangulares
 
 Se trata de calcular un rectángulo en el cual cae un píxel determinado de la imagen del mapa, a partir del cual obtendremos el hexágono. Para ello hay que  aplicar una rejilla rectangular con tantos rectángulos como hexágonos. Si intentamos crear esa rejilla usando los rectángulos ADJG, veremos que se solapan entre sí.
 
-![Solapamiento de rectángulos circunscritos](hexagon-graphic.jpg)
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagon-graphic.jpg "Solapamiento de rectángulos circunscritos")
 
 El solapamiento implica que algunos píxeles pueden pertenecer a dos rectángulos a la vez, lo cual resulta un problema, pues necesitamos unas coordenadas únicas para cada píxel. La solución pasa por utilizar una rejilla diferente, tal y como se muestra a continuación:
 
-![Rejilla rectangular sobre teselado hexagonal](hexagonal-map-rect-grid.png)
-    Rejilla rectangular sobre teselado hexagonal
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagonal-map-rect-grid.png "Rejilla rectangular sobre teselado hexagonal")
 
 En vez de utilizar los rectángulos ADJG \[con dimensiones w (anchura) y h (altura)\], se utilizan rectángulos más pequeños, con la misma altura  pero anchura b+s. Si nos fijamos veremos que ese tamaño se corresponde con el rectángulo ACIG.
 
@@ -426,7 +425,7 @@ public class HexagonalMapGUI extends JFrame {
 
 El resultado de ejecutar la clase anterior es el siguiente.
 
-![Panel de mapa detectando la posición del ratón](hexagonal-demo-0.0.1.png "Panel de mapa detectando la posición del ratón")
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-2/hexagonal-demo-0.0.1.png "Panel de mapa detectando la posición del ratón")
 
 Si quieres, puedes clonar el proyecto tú mismo desde su repositorio en Github: [HexagonalMaps.git](https://github.com/magomar/HexagonalMaps.git)
 

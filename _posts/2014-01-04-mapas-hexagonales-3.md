@@ -85,7 +85,7 @@ Para concretar, se van a considerar los tipos de terreno incluidos en la _enum_�
  Continuamos con la clase TerrainType. Además de los métodos ya comentados, se incluye un método estático denominado _getImageIndex(int bitMask)_, el cual dado una máscara de bits nos devuelve el índice correspondiente a una cierta imagen. Como se puede ver,  la obtención de este índice es algo tan sencillo como restar 1 a la máscara de bits. Este índice se puede transformar después en unas coordenadas 2D que indican en qué posición se encuentra esa imagen dentro de una matriz de imágenes. Este esquema nos permite almacenar todos los gráficos correspondientes a un cierto tipo de terreno en un único archivo de imagen.
  Se entenderá mejor mostrando un archivo de ejemplo con los gráficos de un determinado tipo de terreno, en este caso correspondiente al tipo FOREST.
 
- ![](m_terrain_forest.png "Gráficos para indicar la presencia de bosque")
+ ![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-3/m_terrain_forest.png "Gráficos para indicar la presencia de bosque")
 
 Como se puede observar, las diferentes variaciones de un cierto tipo de terreno que podemos encontrar se representan en una matriz bidimensional. Nótese que la matriz consta de 8 * 8 = 64 imágenes distintas, que es justo el número de combinaciones de direcciones posible.  Dada esa matriz y un índice de 0 a 64 es trivial el cálculo de las coordenadas (fila y columna) correspondientes a ese índice. A lo largo de este artículo y del proyecto de software que lo acompaña, asumimos el orden mostrado en este ejemplo, en el cual la columna es más significativa que la fila, lo que se traduce en las siguientes relaciones:
 
@@ -147,6 +147,7 @@ Al número resultante de considerar cada uno de esos bits bandera como parte de 
 {N, NE} -> 000011
 {S, SE} -> 001100
 {% endhighlight %}
+
 Esta forma de representación binaria ocupa muy poca memoria (para cada celda se requiere un byte por cada tipo de terreno) y además permite realizar operaciones de conjunto de forma muy eficiente, mediante lógica binaria.
 
 En Java disponemos de los enum como alternativa al enfoque basado en máscaras de bits. Es una solución de más alto nivel, más flexible, más legible, type safe y con una implementación eficiente y compacta. Además, como cada elemento enumerado lleva asociado un ordinal, es muy fácil pasar de una a otra representación según convenga.
@@ -590,9 +591,9 @@ public class HexagonalMapGUI extends JFrame {
 }
 {% endhighlight %}
 
-A los 2 paneles existentes previamente, se ha añadido una barra de tareas con controles para crear un nuevo mapa aleatorio usando un tipo de terreno específico. La imagen siguiente muestra la nuevo interfaz de usuario.
+A los 2 paneles existentes previamente, se ha añadido una barra de tareas con controles para crear un nuevo mapa aleatorio usando un tipo de terreno específico. La imagen siguiente muestra la nueva interfaz de usuario.
 
-![](random-terrain-demo.jpg)
+![]({{ site.url }}{{ site.baseurl }}/assets/mapas-hexagonales-3/random-terrain-demo.jpg)
 
 Se sugiere probar con diferentes terrenos, incluyendo al menos los tipos ROAD y RIVER, que son características lineales. De esta forma se pueden ver los 2 usos de las direcciones, para crear transiciones de terreno (FOREST, HILLS, etc.) y para representar características lineales (ROAD, RIVER). 
 
