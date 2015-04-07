@@ -1,6 +1,6 @@
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
+title: De Ludo Bellico
+email: magomar@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
    Blog dedicado a la programación de juegos de estrategia en Java. Desde la representación del mapa mediante
    coordenadas hexagonales hasta la creación de algoritmos de pathfinding e inteligencia artificial.
