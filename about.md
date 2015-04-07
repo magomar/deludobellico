@@ -4,8 +4,8 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+**De Ludo Bellico**: expresión en latín para expresar el concepto de "juego de guerra" (Gracias a toda la comunidad de [Punta de Lanza](http://www.puntadelanza.net/Index.php) por ayudarme con el título, @Gorgias96 por la idea de usar latín y @Piteas por sugerirme la forma latina _de + ablativo_ ) 
 
-You can find the source code for the Jekyll new theme at: [github.com/jglovier/jekyll-new](https://github.com/jglovier/jekyll-new)
+> 1.-  'dê' : "de, desde". (preposición). , 2.-  'lûdus,î' : "juego". (sustantivo). 2ª Declinación 3.-  'bellicus,a,um' : "militar; guerrero". (adjetivo). 2ª Adj.
 
-You can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)
+De Ludo Bellico es un blog dedicado a la programación en Java, con especial foco en la programación de juegos de guera y estrategia.
